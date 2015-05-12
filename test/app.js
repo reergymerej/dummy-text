@@ -19,6 +19,12 @@ describe('word', function () {
   it('should return a string of a specified length', function () {
     will(app.word(2).length).be(2);
   });
+
+  it('should return a word with a length within a min/max', function () {
+    var length = app.word(6, 9).length;
+    will(length).beMoreThan(5);
+    will(length).beLessThan(10);
+  });
 });
 
 describe('sentence', function () {

@@ -5,19 +5,31 @@ var rand = function (min, max) {
 };
 
 var letter = (function () {
-  var a = 'A'.charCodeAt(0),
+  var a = 'a'.charCodeAt(0),
     z = 'z'.charCodeAt(0);
 
   return function () {
 
     return String.fromCharCode(rand(a, z));
-    
+
   };
 }());
 
-var word = function (length) {
-  var word = '';
-  length = length || rand(4, 7);
+var word = function (min, max) {
+  var word = '', length;
+
+  if (arguments.length === 0) {
+    length = rand(4, 7);
+
+  } else {
+    min = min || 4;
+
+    if (max) {
+      length = rand(min, max);
+    } else {
+      length = min;
+    }
+  }
 
   while (word.length < length) {
     word += letter();
@@ -31,16 +43,14 @@ var sentence = function (length) {
   length = length || rand(4, 10);
 
   while (words.length < length) {
-    words.push(word());
+    words.push(word(1, 7));
   }
 
   return words.join(' ');
 };
 
-module.exports = (function () {
-  return {
-    letter: letter,
-    word: word,
-    sentence: sentence
-  };
-}());
+module.exports = {
+  letter: letter,
+  word: word,
+  sentence: sentence
+};
